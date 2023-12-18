@@ -4,6 +4,7 @@ import com.example.dtoslearning.dto.UserDto;
 import com.example.dtoslearning.model.User;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,13 @@ public class UserService {
         userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
         return userDto;
+    }
+
+
+    public long countUsers(){
+        String jpql = "SELECT COUNT(u.userId) FROM User u";
+        Query query = entityManager.createQuery(jpql);
+        return (long) query.getSingleResult();
     }
 
 }

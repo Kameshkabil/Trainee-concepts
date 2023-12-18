@@ -53,4 +53,9 @@ public class UserController {
         userService.deleteUserById(id);
         return "Deleted Successfully";
     }
+
+    @GetMapping("/usersCount")
+    public String getUserCount(){
+        return "Available Users : "+userService.countUsers();
+    }
 }
