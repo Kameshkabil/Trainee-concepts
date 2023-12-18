@@ -1,15 +1,16 @@
 package com.example.dtoslearning.controller;
 
 
+import com.example.dtoslearning.exceptions.ProductNotFoundException;
 import com.example.dtoslearning.model.Product;
 import com.example.dtoslearning.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 public class ProductController {
@@ -23,7 +24,8 @@ public class ProductController {
     }
 
     @GetMapping("/search/products")
-    public List<Product> searchProductName(@RequestParam("query") String query){
+    public List<Product> searchProductName(@RequestParam("query") String query) throws ProductNotFoundException {
+
         List<Product> product = productService.user_filter_search_products(query);
         return product;
     }
