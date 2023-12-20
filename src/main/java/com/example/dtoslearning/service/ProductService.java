@@ -24,10 +24,9 @@ public class ProductService {
 
     public List<Product> user_filter_search_products(String query) throws ProductNotFoundException {
         String splitWord = query.substring(0,3);
-        System.out.println(splitWord);
         String jpql = "SELECT p FROM Product p WHERE p.productName LIKE :searchTerm";
         TypedQuery<Product> typedQuery = entityManager.createQuery(jpql,Product.class);
-        typedQuery.setParameter("searchTerm",splitWord+"%");
+        typedQuery.setParameter("searchTerm",splitWord+"%");//setParameters avoid sql injection / safety manners
         List<Product> resultList =  typedQuery.getResultList();
 
         if(resultList.isEmpty()){
