@@ -14,7 +14,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -37,6 +37,9 @@ public class ProductController {
 //        return restTemplate.exchange(
 //                "http://localhost:8081/products",HttpMethod.POST,entity,String.class).getBody();
 //    }
+
+
+
 
     @GetMapping("/search/products")
     public List<Product> searchProductName(@RequestParam("query") String query) throws ProductNotFoundException {

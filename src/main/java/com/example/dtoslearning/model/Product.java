@@ -2,6 +2,10 @@ package com.example.dtoslearning.model;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+
 
 @Entity
 @Table(name = "products")
@@ -17,6 +21,17 @@ public class Product {
     private String category;
     @Column(name = "brand")
     private String brand;
+
+//    public Product(Long productId, String productName, String description, String category, String brand) {
+//        this.productId = productId;
+//        this.productName = productName;
+//        this.description = description;
+//        this.category = category;
+//        this.brand = brand;
+//    }
+
+    //    public Product(Object o, String shoes, String s, String footWear, String nike) {
+//    }
 
     public Long getProductId() {
         return productId;
