@@ -2,7 +2,12 @@ package com.example.dtoslearning.model;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "Aliens")
 public class Aliens {

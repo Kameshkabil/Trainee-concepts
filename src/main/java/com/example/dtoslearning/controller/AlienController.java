@@ -1,6 +1,7 @@
 package com.example.dtoslearning.controller;
 
 import com.example.dtoslearning.model.Aliens;
+import com.example.dtoslearning.service.AlienServiceLayer;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class AlienController {
 
     @Autowired
+    AlienServiceLayer alienServiceLayer;
+    @Autowired
     EntityManager entityManager;
 
     @Transactional
@@ -20,5 +23,10 @@ public class AlienController {
     public ResponseEntity<String> createNewAlienAccount(@RequestBody Aliens aliens){
         entityManager.persist(aliens);
        return new ResponseEntity<>("Account created successfully", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public Aliens getParticularAlienData(@PathVariable("id") Integer id){
+        return alienServiceLayer.getParticularAlienData(id);
     }
 }
