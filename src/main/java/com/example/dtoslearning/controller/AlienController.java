@@ -19,10 +19,10 @@ public class AlienController {
     EntityManager entityManager;
 
     @Transactional
-    @PostMapping("/createAliensData")
-    public ResponseEntity<String> createNewAlienAccount(@RequestBody Aliens aliens){
-        entityManager.persist(aliens);
-       return new ResponseEntity<>("Account created successfully", HttpStatus.CREATED);
+        @PostMapping("/createAliensData")
+    public ResponseEntity<Aliens> createNewAlienAccount(@RequestBody Aliens aliens){
+          entityManager.persist(aliens);
+       return new ResponseEntity<>(aliens, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

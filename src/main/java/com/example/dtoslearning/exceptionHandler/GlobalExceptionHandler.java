@@ -1,5 +1,6 @@
 package com.example.dtoslearning.exceptionHandler;
 
+import com.example.dtoslearning.exceptions.AlienAlreadyExistsExcepiton;
 import com.example.dtoslearning.exceptions.ProductNotFoundException;
 import com.example.dtoslearning.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,12 @@ public class GlobalExceptionHandler {
         return errorMap;
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AlienAlreadyExistsExcepiton.class)
+    public Map<String,String> handleAlienAlreadyExists(AlienAlreadyExistsExcepiton e){
+        Map<String,String> errorMap = new HashMap<>();
+        errorMap.put("status",e.getMessage());
+        return errorMap;
+    }
 
 }
