@@ -3,10 +3,12 @@ package com.example.dtoslearning.service;
 import com.example.dtoslearning.dto.UserDto;
 import com.example.dtoslearning.model.User;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,17 @@ public class UserService {
     @Autowired
     private EntityManager entityManager;
 
+    @Autowired
+    EntityManagerFactory entityManagerFactory;
+
+    public List getHistory(long userId){
+        AuditReader reader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
+        AuditQuery queryHistoryOfUser = reader.createQuery()
+                .forRevisionsOfEntity(User.class, true, true)
+                .add(AuditEntity.property("userId").eq(userId));
+        return queryHistoryOfUser.getResultList();
+
+    }
 //    public void createUserAccount(User user){
 //        User userExisting = userRepository.findByEmail(user.getEmail());
 //        if(userExisting!=null){

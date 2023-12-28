@@ -3,6 +3,8 @@ package com.example.dtoslearning.controller;
 import com.example.dtoslearning.dto.UserDto;
 import com.example.dtoslearning.model.User;
 import com.example.dtoslearning.service.UserService;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    EntityManager entityManager;
 
 
 //    @PostMapping("/createUser")
@@ -57,5 +61,22 @@ public class UserController {
     @GetMapping("/usersCount")
     public String getUserCount(){
         return "Available Users : "+userService.countUsers();
+    }
+
+    @GetMapping("/getUserHistory/{id}")
+    public List getUserHistory(@PathVariable("id") long id){
+        return userService.getHistory(id);
+    }
+
+
+    @Transactional
+    @PutMapping("/update/users/{id}")
+    public User updateUserRecord(@PathVariable("id") long id,@RequestBody User user){
+        User user1 = entityManager.find(User.class,id);
+        if (user1!=null) {
+            return entityManager.merge(user);
+        }else{
+            throw  new RuntimeException();
+        }
     }
 }
