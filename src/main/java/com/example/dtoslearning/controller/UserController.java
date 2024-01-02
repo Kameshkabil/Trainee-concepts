@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -59,8 +61,10 @@ public class UserController {
     }
 
     @GetMapping("/usersCount")
-    public String getUserCount(){
-        return "Available Users : "+userService.countUsers();
+    public Map<String, Long> getUserCount(){
+        Map map = new HashMap<>();
+        map.put("no.of users",userService.countUsers());
+        return map;
     }
 
     @GetMapping("/getUserHistory/{id}")

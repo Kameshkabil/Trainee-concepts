@@ -2,7 +2,7 @@ package com.example.dtoslearning.model;
 
 import org.hibernate.envers.RevisionListener;
 
-import java.time.ZoneOffset;
+
 import java.util.Date;
 
 public class MyRevisionListener implements RevisionListener {

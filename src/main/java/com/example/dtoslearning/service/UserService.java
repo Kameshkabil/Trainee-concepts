@@ -94,8 +94,8 @@ public class UserService {
 
 
     public long countUsers(){
-        String jpql = "SELECT COUNT(u.userId) FROM User u";
-        Query query = entityManager.createQuery(jpql);
+        String count_query = "SELECT COUNT(u.userId) FROM User u";
+        Query query = entityManager.createQuery(count_query);
         return (long) query.getSingleResult();
     }
 

@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Component
 public class Scheduler {
-    @Scheduled(cron = "0 * 18 * * ?")
+    @Scheduled(cron = "0 * 17 * * ?")
     public void cronJobsch()throws Exception{
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Date now = new Date();
