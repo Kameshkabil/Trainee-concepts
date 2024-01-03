@@ -542,6 +542,7 @@ databaseChangeLog:
 # Rest Template in SpringBoot
 ### what is Rest Template?
 RestTemplate is nothing but one endpoint call another endpoints.
+**From One MicroService to Call Another MicroServices**
 This Process is called RestTemplate.
 ### How to Implement Rest Template in SpringBoot?
 **step 1:** Config RestTemplate
@@ -594,6 +595,73 @@ public class RestTemplateServiceLayer {
 ![rest_template](assert/resttemplate.png)
 Look this image , I Hit **http://localhost:8080/api/firstEndpoint** - This endpoint call this endpoint - **https://jsonplaceholder.typicode.com/todos/1** - This endpoint return Json object.
 This Process is called RestTemplate.
+
+# Externalized Configuration using SpringBoot
+Externalized configuration provides flexibility in configuring your application for different environments (e.g., development, testing, production) or deployment scenarios. You can easily adjust settings without changing the application code, making it adaptable to various situations.
+
+### How to Implement Externalized Configuration In This Project
+#### This Project Goal : 
+##### create application.properties file outside of the source code(project).And Access External application.properties file in the springboot application.
+
+**step 1:** create a custom-application.properties file in D:(directory)
+**For Example - (D:/config/custom-application.properties)**
+```properties
+#connect database
+spring.datasource.url=jdbc:mysql://localhost:3306/user_profile?useSSL=false
+spring.datasource.username=root
+spring.datasource.password=12345
+
+
+#Hibernate properties
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+
+#config liquibase
+spring.liquibase.change-log=classpath:db/changelog/changelog-master.yml
+
+# Enable Hibernate Envers
+#spring.jpa.properties.hibernate.ejb.event.post-insert=org.hibernate.envers.event.spi.EnversPostInsertEventListenerImpl
+#spring.jpa.properties.hibernate.ejb.event.post-update=org.hibernate.envers.event.spi.EnversPostUpdateEventListenerImpl
+#spring.jpa.properties.hibernate.ejb.event.post-delete=org.hibernate.envers.event.spi.EnversPostDeleteEventListenerImpl
+
+# Enable Hibernate Envers
+spring.jpa.properties.hibernate.listeners.envers.autoRegister=false
+spring.jpa.properties.hibernate.envers.audit_table_prefix=audit_
+spring.jpa.properties.hibernate.envers.audit_table_suffix=_history
+
+
+#logging.level.org.springframework.web=INFO
+#logging.level.org.hibernate=ERROR
+#logging.level.net.guides=DEBUG
+
+#Access all spring actuator endpoints
+management.endpoints.web.exposure.include=*
+
+server.PORT=9090
+```
+**This custom-application.properties file available in D:/config/custom-application.properties**
+
+### How to access custom-application.properties in your springboot application.
+**Method-1**
+```properties
+spring.config.location=file://D:/config/application.properties
+```
+
+**Method-2**
+```
+Rigth Click Main Class -> Click Modify Option -> Add MV Options -> 
+And Remove MV Option Text And Type(-Dspring.config.location=file:///d:/config/app_DEV.properties) ->
+Click Apply and Ok.
+```
+**-Dspring.config.location=file:///d:/config/app_DEV.properties**
+
+**step 3:** Run Your SpringBoot Application.
+
+
+
+
 
 
 
