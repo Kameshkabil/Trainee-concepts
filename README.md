@@ -596,6 +596,8 @@ public class RestTemplateServiceLayer {
 Look this image , I Hit **http://localhost:8080/api/firstEndpoint** - This endpoint call this endpoint - **https://jsonplaceholder.typicode.com/todos/1** - This endpoint return Json object.
 This Process is called RestTemplate.
 
+#
+
 # Externalized Configuration using SpringBoot
 Externalized configuration provides flexibility in configuring your application for different environments (e.g., development, testing, production) or deployment scenarios. You can easily adjust settings without changing the application code, making it adaptable to various situations.
 
