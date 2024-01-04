@@ -660,6 +660,81 @@ Click Apply and Ok.
 **step 3:** Run Your SpringBoot Application.
 
 
+# Openfeign using SpringBoot
+### what is Openfeign?
+OpenFiegn is nothing but from one microservice call to another microservices.
+**eg: (one microservice endpoint to call another microservices endpoints).**
+In microservice spring boot projects we will have lot of external api calls. So openfeign simplifies external rest api calls
+
+### How to Implement OpenFeign?
+**step 1:**
+Add Openfeign Dependency in pom.xml 
+```xml
+<properties>
+    <java.version>17</java.version>
+    <spring-cloud.version>2023.0.0</spring-cloud.version>
+</properties>
+
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-openfeign</artifactId>
+</dependency>
+        
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring-cloud.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+**step 2:**
+create a interface and implement **@FeignClient**
+```java
+@FeignClient(value = "feignDemo",url = "http://localhost:8085/api")
+public interface APIClient {
+    @GetMapping("/username")
+    public String userName();
+}
+```
+**step 3:**
+use APIClient Interface using your Controller class
+```java
+@RestController
+@RequestMapping("/feignService")
+public class FeignController {
+    @Autowired
+    APIClient apiClient;
+    @GetMapping("/feign-username")
+    public String getUserNameFromAnotherMicroServices(){
+        return apiClient.userName();
+    }
+}
+```
+**step 4:**
+Enable FeignClients configuration in your springboot main class
+
+```java
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@EnableFeignClients
+public class DtosLearningApplication {
+    
+    public static void main(String[] args) {
+
+        SpringApplication.run(DtosLearningApplication.class, args);
+    }
+}
+```
+I have 2 Microservice Application. First Microservice Application starts **9090** port number.
+And Second Microservice Application starts **8085** port number.I think my Springboot Application port number is **9090**.
+how to access **8085** port springboot application endpoints. so I decided to use **OpenFeign** concept.
+Because This concept allows **From one Microservice to Call Another Microservices.(eg:one Endpoint to call another springboot application endpoints).**
 
 
 

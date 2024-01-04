@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -15,6 +16,7 @@ import java.util.Date;
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableScheduling
+@EnableFeignClients
 public class DtosLearningApplication implements CommandLineRunner {
 
 	private static Logger LOG =  LoggerFactory.getLogger(SpringApplication.class);
