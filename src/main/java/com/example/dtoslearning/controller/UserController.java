@@ -1,15 +1,18 @@
 package com.example.dtoslearning.controller;
 
 import com.example.dtoslearning.dto.UserDto;
+import com.example.dtoslearning.exportDataToExcelImplementation.UserExcelExporter;
 import com.example.dtoslearning.model.User;
 import com.example.dtoslearning.service.UserService;
 import jakarta.persistence.EntityManager;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,5 +85,19 @@ public class UserController {
         }else{
             throw  new RuntimeException();
         }
+    }
+
+    @GetMapping("/users/export")
+    public void exportToExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users.xlsx";
+
+        response.setHeader(headerKey, headerValue);
+
+        List<UserDto> userList = userService.getAllUsersInformation();
+
+        UserExcelExporter userExcelExporter = new UserExcelExporter(userList);
+        userExcelExporter.export(response);
     }
 }

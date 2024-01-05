@@ -666,7 +666,8 @@ Click Apply and Ok.
 ### what is Openfeign?
 OpenFiegn is nothing but from one microservice call to another microservices.
 **eg: (one microservice endpoint to call another microservices endpoints).**
-In microservice spring boot projects we will have lot of external api calls. So openfeign simplifies external rest api calls
+In microservice spring boot projects we will have lot of external api calls. 
+So openfeign simplifies external rest api calls
 
 ### How to Implement OpenFeign?
 **step 1:**
