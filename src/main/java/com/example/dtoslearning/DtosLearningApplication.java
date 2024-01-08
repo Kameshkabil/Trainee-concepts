@@ -1,10 +1,13 @@
 package com.example.dtoslearning;
 
+import com.example.dtoslearning.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -17,9 +20,13 @@ import java.util.Date;
 @EnableTransactionManagement
 @EnableScheduling
 @EnableFeignClients
-public class DtosLearningApplication implements CommandLineRunner {
+@EnableCaching
+public class DtosLearningApplication {
 
-	private static Logger LOG =  LoggerFactory.getLogger(SpringApplication.class);
+	@Autowired
+	UserService userService;
+
+	private static Logger LOG =  LoggerFactory.getLogger(DtosLearningApplication.class);
 	public static void main(String[] args) {
 
 		LOG.info("\n 1.STARTING : Spring boot application starting");
@@ -32,13 +39,15 @@ public class DtosLearningApplication implements CommandLineRunner {
 		System.out.println(new Date(System.currentTimeMillis()));
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		LOG.info("2.EXECUTING : command line runner");
-
-		for (int i =1; i<=5; i++){
-			LOG.info("Count = "+i);
-		}
-	}
+//	@Override
+//	public void run(String... args) throws Exception {
+//		LOG.info("2.EXECUTING : command line runner");
+//
+//		for (int i = 1; i <= 5; i++) {
+//			LOG.info("Count = {}", i);
+//		}
+//
+//
+//	}
 
 }

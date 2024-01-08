@@ -9,7 +9,13 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +30,8 @@ public class UserService {
 
     @Autowired
     EntityManagerFactory entityManagerFactory;
+
+    private static Logger LOG =  LoggerFactory.getLogger(SpringApplication.class);
 
     public List getHistory(long userId){
         AuditReader reader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
@@ -72,12 +80,27 @@ public class UserService {
     }
 
 
+    @Cacheable(cacheNames = "users",key = "#id")
     public User findById(Integer id){
+        LOG.info("fetching user from db");
         return entityManager.find(User.class ,id);
+    }
+
+    @Transactional
+    @CachePut(cacheNames = "users",key = "#user.id")
+    public User updateUser(long id, User user){
+        User user1 = entityManager.find(User.class,id);
+        if (user1!=null) {
+            LOG.info("user updated");
+            return entityManager.merge(user);
+        }else{
+            throw  new RuntimeException();
+        }
     }
 
 
     @Transactional
+    @CacheEvict(cacheNames = "users", key = "#id")
     public void deleteUserById(Integer id){
         User user = entityManager.find(User.class,id);
         entityManager.remove(user);

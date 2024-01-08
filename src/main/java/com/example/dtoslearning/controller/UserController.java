@@ -76,15 +76,15 @@ public class UserController {
     }
 
 
-    @Transactional
     @PutMapping("/update/users/{id}")
     public User updateUserRecord(@PathVariable("id") long id,@RequestBody User user){
-        User user1 = entityManager.find(User.class,id);
-        if (user1!=null) {
-            return entityManager.merge(user);
-        }else{
-            throw  new RuntimeException();
-        }
+//        User user1 = entityManager.find(User.class,id);
+//        if (user1!=null) {
+//            return entityManager.merge(user);
+//        }else{
+//            throw  new RuntimeException();
+//        }
+        return userService.updateUser(id,user);
     }
 
     @GetMapping("/users/export")
