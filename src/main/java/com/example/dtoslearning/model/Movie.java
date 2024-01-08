@@ -2,9 +2,12 @@ package com.example.dtoslearning.model;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "movie")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -739,16 +739,44 @@ And Second Microservice Application starts **8085** port number.I think my Sprin
 how to access **8085** port springboot application endpoints. so I decided to use **OpenFeign** concept.
 Because This concept allows **From one Microservice to Call Another Microservices.(eg:one Endpoint to call another springboot application endpoints).**
 
+# Spring hibernate cache @Cacheable annotation
+### without caching,
+without caching, hibernate has to fetch data from  database every time it is requested.
+This process can be time-consuming and can cause performance issues,especially for frequently accessed data.
 
+### with caching,
+**Caching is a technique that allows frequently accessed data to be stored in memory so that it can be quickly retrieved without having to go back to the database every time.**
+Hibernate can reduce the number of database queries it need to execute ,
+improving performance and reducing the load on the database server.
 
+### How to Implement Spring Hibernate cache @Cacheable annotation:
+**step 1:** Add the Ehcache dependency to your pom.xml file:
+```xml
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-ehcache</artifactId>
+    <version>5.6.15.Final</version>
+</dependency>
+```
+**step 2:** Configure Ehcache in your application.properties file:
 
-
-
-
-
-
-
-
+**step 3:** Enable caching for an entity
+```java
+@Data
+@Entity
+@Table(name = "users")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+    private String email;
+    
+}
+```
+Hibernate supports three cache modes for Second-level Caching: read-only, read-write, and transactional. **The read-only cache mode is used for data that is not expected to change frequently**. **The read-write cache mode is used for data that is frequently updated.** **The transactional cache mode is used for data that is updated within a transaction.**
 
 
 
