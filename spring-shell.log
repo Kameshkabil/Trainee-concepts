@@ -38,3 +38,6 @@
 1703701280705:stacktrace
 1703701668829:importAlien ./src/main/resource/aliens.json
 1704713148358:l
+1704715315138:getProduct
+1704715355507:clean
+1704715517087:exit

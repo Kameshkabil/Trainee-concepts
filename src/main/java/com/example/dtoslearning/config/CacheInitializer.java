@@ -11,9 +11,9 @@ public class CacheInitializer implements CommandLineRunner {
     UserService userService;
     @Override
     public void run(String... args) throws Exception {
-//        String userId = "14";
-//        String userData = String.valueOf(userService.findById(Integer.valueOf(userId)));
-//        System.out.println("Cached user data: " + userData);
-        System.out.println("******************************************************");
+        String userId = "14";
+        String userData = String.valueOf(userService.findById(Integer.valueOf(userId)));
+        System.out.println("Cached user data: " + userData);
+        System.out.println("***********************************************");
     }
 }
