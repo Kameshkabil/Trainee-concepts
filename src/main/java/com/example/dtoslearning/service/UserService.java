@@ -72,6 +72,8 @@ public class UserService {
         entityManager.persist(user);
     }
 
+
+    @Cacheable(value = "userCache")
     public List<UserDto> getAllUsersInformation(){
         String jpql = "SELECT u FROM User u";
         TypedQuery<User> query = entityManager.createQuery(jpql, User.class);

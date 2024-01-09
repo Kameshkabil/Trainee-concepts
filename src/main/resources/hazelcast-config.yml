@@ -1,0 +1,14 @@
+hazelcast:
+  instance-name: hazelcast-instance
+
+  properties:
+    hazelcast.logging.type: slf4j
+
+  network:
+    join:
+      multicast:
+        enabled: true
+
+  map:
+    userCache:
+      time-to-live-seconds: 300

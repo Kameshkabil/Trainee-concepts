@@ -5,10 +5,13 @@ import com.example.dtoslearning.model.Posts;
 import com.example.dtoslearning.model.User;
 import com.example.dtoslearning.service.PostsService;
 import com.example.dtoslearning.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class PostsController {
