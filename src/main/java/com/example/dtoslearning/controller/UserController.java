@@ -4,6 +4,8 @@ import com.example.dtoslearning.dto.UserDto;
 import com.example.dtoslearning.exportDataToExcelImplementation.UserExcelExporter;
 import com.example.dtoslearning.model.User;
 import com.example.dtoslearning.service.UserService;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -45,6 +47,8 @@ public class UserController {
         return new ResponseEntity("Account Created Successfully", HttpStatus.CREATED);
     }
 
+    @Counted(value = "my.customer.counter", description = "A custom counter")
+    @Timed(value = "my.custom.timer",description = "A custom timer")
     @GetMapping("/allUsers")
     public List<UserDto> getAllUsers(){
         List<UserDto> listUsers = userService.getAllUsersInformation();
@@ -88,7 +92,7 @@ public class UserController {
     }
 
     @GetMapping("/users/export")
-    public void exportToExcel(HttpServletResponse response) throws IOException {
+    public String exportToExcel(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=users.xlsx";
@@ -99,5 +103,7 @@ public class UserController {
 
         UserExcelExporter userExcelExporter = new UserExcelExporter(userList);
         userExcelExporter.export(response);
+
+        return "Downloaded Excel File ✅";
     }
 }
